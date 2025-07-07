@@ -32,7 +32,23 @@ library(tidyverse)
 ### What is the climate of Yale-Myers Forest?
 
 Yale-Myers Forest is a 7,840 acre research forest in Connecticut. It is a hub for education, research, and harvesting operations within the Yale Forest School system. The forest primarily consists of mixed hardwoods on glacial till soils, featuring a significant presence of hemlock, scattered white pine stands from old field origins, and red pine plantations established in the 1940s. 
+```{r, include=F}
 
+install.packages("basemaps")
+library(basemaps)
+library(sf)
+ym <-  data.frame(lat =  41.952909,lon = -72.123859 )
+ym_sf_point <- st_as_sf(ym, coords = c("lon","lat"), crs=4269) 
+ym_sf <- st_as_sf(ym, coords = c("lon","lat"), crs=4269) %>% st_buffer( dist = 500)
+
+library(ggplot2)
+
+set_defaults(map_service = "osm", map_type = "streets")
+ggplot() + 
+  basemap_gglayer(ym_sf) +
+  scale_fill_identity() 
+  
+```
 To explore the climate of the area, download daily daymet data for (41.952909, -72.123859). Review the arguments for the download_daymet() function.
 
 ```{r, include=T}
