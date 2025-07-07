@@ -17,6 +17,13 @@ In this workshop you will:
 
 # Data manipulation with tidyverse
 
+### Install libraries for this workshop
+```{r, include=T}
+install.packages('daymetr')
+install.packages('tidyverse')
+install.packages('ggplot2')
+```
+
 ### Load the required libraries
 ```{r, include=T}
 library(daymetr)
@@ -112,10 +119,11 @@ Look at your work:
 ```{r, include=T}
 head(Yale.Myers.sub )
 ```
-### goup_by() and summarise()
-Create an annual summary of conditions using goup_by() and summarise() :
+### reframe()
+Create an annual summary of conditions using reframe() :
 ```{r, include=T}
-Yale.Myers.annual <-Yale.Myers.sub %>% group_by(year) %>% summarise( tmax = max(tmax), tmin = min(tmin), tmean = mean(tmean), prcp = sum(prcp))
+Yale.Myers.annual <-Yale.Myers.sub %>% reframe( .by= year,
+tmax = max(tmax), tmin = min(tmin), tmean = mean(tmean), prcp = sum(prcp))
 ```
 Look at your work:
 ```{r, include=T}
@@ -129,9 +137,10 @@ Look at your work:
 ```{r, include=T}
 head(Yale.Myers.monthly)
 ```
-Determine the average conditions using goup_by() and summarise() by both year and month:
+Determine the average conditions using reframe() by both year and month:
 ```{r, include=T}
-Yale.Myers.yearmon <-Yale.Myers.sub %>% group_by(month, year) %>% summarise( tmax = max(tmax), tmin = min(tmin), tmean = mean(tmean), prcp = sum(prcp))
+Yale.Myers.yearmon <-Yale.Myers.sub %>% reframe(.by = c(month, year),
+tmax = max(tmax), tmin = min(tmin), tmean = mean(tmean), prcp = sum(prcp))
 ```
 Look at your work:
 ```{r, include=T}
@@ -148,7 +157,7 @@ head(Yale.Myers.annual.tmean)
 ```
 ### save()
 
-Save the two files, Yale.Myers and Yale.Myers.sub, in a .RDTAT object. You will need this for the post workshop assessment:
+Save the two files, Yale.Myers and Yale.Myers.sub, in a .RDTAT object. You will need this for the post-workshop assessment:
 ```{r, include=T}
 save(Yale.Myers, Yale.Myers.sub,Yale.Myers.annual.tmean, file="DataBasics.RDATA" )
 ```
