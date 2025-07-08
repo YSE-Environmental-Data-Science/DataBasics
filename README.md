@@ -47,7 +47,7 @@ ym_sf <- st_as_sf(ym, coords = c("lon","lat"), crs=4269) %>% st_buffer( dist = 5
 
 library(ggplot2)
 ```
-```{r, echo=TRUE}
+```{r, include=F}
 ggplot() + 
   basemap_gglayer(ym_sf) +
   scale_fill_identity() 
